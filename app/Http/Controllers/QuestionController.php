@@ -12,7 +12,7 @@ class QuestionController extends Controller
 
         Question::query()->create(
             request()->validate([
-                'question' => 'required|min:10|max:255',
+                'question' => 'required|min:10|max:265',
 
             ])
         );
