@@ -1,5 +1,5 @@
-
- # Cores
+#!/usr/bin/env sh
+# Cores
 NC='\033[0m'
 BBlue='\033[1;34m'
 BRed='\033[1;31m'
