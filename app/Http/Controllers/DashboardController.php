@@ -12,6 +12,8 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request): \Illuminate\View\View
     {
+
+        //dd(Question::all());
         return view('dashboard', [
             'questions' => Question::all(),
         ]);
