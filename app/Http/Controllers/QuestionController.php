@@ -18,6 +18,7 @@ class QuestionController extends Controller
             ],
 
         ]);
+
         Question::query()->create(
             $atributes
         );
