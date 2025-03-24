@@ -1,5 +1,7 @@
 <?php
 
+use function Pest\Laravel\assertDatabaseHas;
+
 it('can like a question', function () {
     //a
     $user     = \App\Models\User::factory()->create();
@@ -7,9 +9,8 @@ it('can like a question', function () {
     \Pest\Laravel\actingAs($user);
     //a
     \Pest\Laravel\post(route('question.like', $question))->assertRedirect();
-    ;
 
-    \Pest\Laravel\assertDatabaseHas('votes', [
+    assertDatabaseHas('votes', [
         'user_id'     => $user->id,
         'question_id' => $question->id,
         'like'        => 1,
