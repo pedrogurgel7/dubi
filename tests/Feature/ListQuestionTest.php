@@ -14,7 +14,7 @@ it('returns a list of questions', function () {
     //assert
 
     foreach ($questions as $q) {
-        /** @var Question $q */
+        /** @var Question $q  */
         $response->assertSee($q->question);
     }
 
