@@ -1,6 +1,6 @@
 <?php
 
-use function Pest\Laravel\{actingAs, assertDatabaseHas, post};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post};
 
 it('can like a question', function () {
     //a
@@ -46,4 +46,15 @@ it("should be able to unlike a question", function () {
         'like'        => 0,
         'unlike'      => 1,
     ]);
+});
+
+it('it should not be able to unlike and like the same question ', function () {
+
+    $user     = \App\Models\User::factory()->create();
+    $question = \App\Models\Question::factory()->create();
+    actingAs($user);
+    post(route('question.unlike', $question))->assertRedirect();
+    post(route('question.like', $question))->assertRedirect();
+
+    assertDatabaseCount('votes', 1);
 });

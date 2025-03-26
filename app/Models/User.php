@@ -59,22 +59,18 @@ class User extends Authenticatable implements MustVerifyEmail
     {
 
         $this->votes()->updateOrCreate(
-            [
-                'question_id' => $q->id,
-                'like'        => 1,
-                'unlike'      => 0,
-            ]
+            ['question_id' => $q->id],
+            ['like'      => 1,
+                'unlike' => 0]
         );
     }
 
     public function unlike(Question $q): void
     {
         $this->votes()->updateOrCreate(
-            [
-                'question_id' => $q->id,
-                'like'        => 0,
-                'unlike'      => 1,
-            ]
+            ['question_id' => $q->id],
+            ['like'      => 0,
+                'unlike' => 1]
         );
     }
 
