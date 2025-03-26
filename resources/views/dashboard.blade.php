@@ -33,16 +33,10 @@
             <h2 class="text-2xl font-bold">List of Questions</h2>
         </div>
 
-        @foreach($questions as $q)
+        @foreach($questions as $question)
             <div>
-               <x-question item="{{$q->question}}"/>
+               <x-question :question="$question"/>
             </div>
-
-
-
-
-
-
         @endforeach
     </div>
 

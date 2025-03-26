@@ -32,3 +32,18 @@ it('it should not be able to like twice ', function () {
     \Pest\Laravel\assertDatabaseCount('votes', 1);
 
 });
+
+it("should be able to unlike a question", function () {
+
+    $user     = \App\Models\User::factory()->create();
+    $question = \App\Models\Question::factory()->create();
+    actingAs($user);
+    post(route('question.unlike', $question))->assertRedirect();
+
+    assertDatabaseHas('votes', [
+        'user_id'     => $user->id,
+        'question_id' => $question->id,
+        'like'        => 0,
+        'unlike'      => 1,
+    ]);
+});
