@@ -5,7 +5,7 @@
     'patch' => null,
     'delete'=>null
 ])
-<form method="post" action="{{route('question.store')}}">
+<form action="{{ $action }}" method="post">
     @csrf
 
     @if($put)
