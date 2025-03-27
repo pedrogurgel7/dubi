@@ -7,6 +7,15 @@ use Illuminate\Http\{RedirectResponse};
 
 class QuestionController extends Controller
 {
+    public function index(): \Illuminate\View\View
+    {
+        return view(
+            'question.index',
+            [
+                'questions' => user()->questions()->get(),
+            ]
+        );
+    }
     public function store(): RedirectResponse
     {
 
@@ -24,6 +33,6 @@ class QuestionController extends Controller
             ]
         );
 
-        return to_route('dashboard');
+        return to_route('question.index');
     }
 }
