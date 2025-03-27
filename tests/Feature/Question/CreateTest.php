@@ -12,6 +12,7 @@ test('it should be able to create a new question bigger than 255 caracters', fun
     //Act
     $request = post(route('question.store'), [
         'question' => str_repeat('*', 255) . '?',
+
     ]);
     //Assert
 
