@@ -8,10 +8,27 @@ use Illuminate\Http\{RedirectResponse};
 
 class QuestionController extends Controller
 {
+    public function destroy(Question $question): RedirectResponse
+    {
+        $this->authorize('destroy', $question);
+
+        $question->delete();
+
+        return back();
+    }
+    public function index(): \Illuminate\View\View
+    {
+        return view(
+            'question.index',
+            [
+                'questions' => user()->questions()->get(),
+            ]
+        );
+    }
     public function store(): RedirectResponse
     {
 
-        $atributes = request()->validate([
+        request()->validate([
             'question' => ['required',
                 'min:10',
                 new EndWithQuestionMarkRule(),
@@ -19,10 +36,12 @@ class QuestionController extends Controller
 
         ]);
 
-        Question::query()->create(
-            $atributes
+        user()->questions()->create(
+            [
+                'question' => request()->question,
+            ]
         );
 
-        return to_route('dashboard');
+        return to_route('question.index');
     }
 }

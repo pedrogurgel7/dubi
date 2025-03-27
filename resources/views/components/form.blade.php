@@ -12,7 +12,7 @@
         @method('PUT')
     @endif
 
-    @if($put)
+    @if($patch)
         @method('PATCH')
     @endif
 
