@@ -67,3 +67,9 @@ it('should be created as a draft', function () {
     assertDatabaseHas('questions', ['draft' => true]);
 
 });
+
+test('only authenticated users can create questions', function () {
+    post(route('question.store'), [
+        'question' => str_repeat('*', 255) . '?',
+    ])->assertRedirect(route('login'));
+});
