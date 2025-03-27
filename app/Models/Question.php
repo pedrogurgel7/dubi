@@ -10,6 +10,10 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'draft' => 'boolean',
+    ];
+
     protected $guarded = [];
 
     public function votes(): HasMany

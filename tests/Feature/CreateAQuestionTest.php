@@ -51,3 +51,18 @@ it('should have at least 10 characters', function () {
     assertDatabaseCount('questions', 0);
 
 });
+
+it('should be created as a draft', function () {
+    //Arrange
+    $user = User::factory()->create();
+    actingAs($user);
+
+    //Act
+    $request = post(route('question.store'), [
+        'question' => str_repeat('*', 255) . '?',
+    ]);
+    //Assert
+
+    assertDatabaseHas('questions', ['draft' => true]);
+
+});
