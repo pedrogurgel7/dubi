@@ -20,6 +20,15 @@
 
             </x-form>
 
+            <x-form post action="{{ route('question.unlike', $question) }}" class="flex items-center space-x-2">
+
+                <button class="flex items-start space-x-1 text-red-500" type="submit">
+                    <x-icons.thumbs-up class="w-5 h-5  hover:text-red-300 cursor-pointer"/>
+                    <span>{{ $question->votes_sum_unlike ?: 0}}</span>
+                </button>
+
+
+            </x-form>
 
 
     </div>
