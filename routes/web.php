@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/unlike/{question}', Question\UnlikeController::class)->name('unlike');
         Route::put('/publish/{question}', Question\PublishController::class)->name('publish');
         Route::delete('/destroy/{question}', [QuestionController::class, 'destroy'])->name('destroy');
-
+        Route::get('/{question}/edit', [QuestionController::class, 'edit'])->name('edit');
     });
 
     #endregion
