@@ -8,7 +8,7 @@ class QuestionPolicy
 {
     public function update(User $user, Question $question): bool
     {
-        return $question->draft;
+        return $question->draft && $question->createdBy()->is($user);
     }
     /**
      * Determine whether the user can view the model.
