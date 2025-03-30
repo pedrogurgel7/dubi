@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/publish/{question}', Question\PublishController::class)->name('publish');
         Route::delete('/destroy/{question}', [QuestionController::class, 'destroy'])->name('destroy');
         Route::get('/{question}/edit', [QuestionController::class, 'edit'])->name('edit');
+        Route::put('/{question}/edit', [QuestionController::class, 'update'])->name('update');
+
     });
 
     #endregion
