@@ -10,10 +10,11 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
                 <x-form post :action="route('question.store')">
-                    <x-text-area name="question" label="question"></x-text-area>
+                    <x-text-area name="question" label="question">
+
+                    </x-text-area>
                     <x-btn.green type="submit">Save</x-btn.green>
                     <x-btn.default type="reset">Reset</x-btn.default>
-
                 </x-form>
 
 
@@ -52,6 +53,10 @@
                                             <x-form delete :action="route('question.destroy', $question)" >
                                                  <x-btn.red>Delete</x-btn.red>
                                             </x-form>
+
+                                            <a href="{{route('question.edit', $question)}}" class="ml-2">
+                                                <x-btn.default>Editar</x-btn.default>
+                                            </a>
                                         </div>
 
 
