@@ -33,6 +33,8 @@
                <x-question :question="$question"/>
             </div>
         @endforeach
+
+        {{$questions->links()}}
     </div>
 
     </x-container>

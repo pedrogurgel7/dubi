@@ -19,3 +19,23 @@ it('returns a list of questions', function () {
     }
 
 });
+
+it('should use pagination for questions', function () {
+    //arrange
+    $user = User::factory()->create();
+    Question::factory()->count(20)->create(
+        [
+            'draft' => true,
+        ]
+    );
+
+    actingAs($user);
+    //act
+
+    //assert
+    $response = get(route('dashboard'))->assertViewHas('questions', function ($q) {
+
+        return $q instanceof \Illuminate\Pagination\LengthAwarePaginator;
+    });
+
+});
