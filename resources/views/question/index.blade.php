@@ -92,7 +92,7 @@
                                     <x-form delete :action="route('question.destroy', $question)" >
                                         <x-btn.red>Delete</x-btn.red>
                                     </x-form>
-                                    <x-form delete :action="route('question.destroy', $question)" >
+                                    <x-form patch :action="route('question.archive', $question)" >
                                         <x-btn.red>Archive</x-btn.red>
                                     </x-form>
                                 </div>
