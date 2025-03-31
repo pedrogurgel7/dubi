@@ -2,7 +2,7 @@
 
 use App\Models\{Question, User};
 
-use function Pest\Laravel\{actingAs, put};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, put};
 
 it('it should be able to update question', function () {
 
@@ -14,11 +14,11 @@ it('it should be able to update question', function () {
     actingAs($user);
 
     put(route('question.update', $question), [
-        'question' => 'new question',
+        'question' => 'new question?',
     ])->assertRedirect();
 
     $question->refresh();
-    expect($question->question)->toBe('new question');
+    expect($question->question)->toBe('new question?');
 
 });
 
@@ -30,11 +30,11 @@ it("should be able to update a question only with status draft", function () {
     actingAs($user);
 
     put(route('question.update', $draftQuestion), [
-        'question' => 'new question',
+        'question' => 'new question?',
     ])->assertRedirect();
 
     put(route('question.update', $notDraftQuestion), [
-        'question' => 'new question',
+        'question' => 'new question?',
     ])->assertForbidden();
 
 });
@@ -47,15 +47,66 @@ it('it should make sure that only who makes the question can update it', functio
 
     actingAs($wrongUser);
     put(route('question.update', $question), [
-        'question' => 'new question',
+        'question' => 'new question?',
     ])->assertForbidden();
 
     actingAs($rightUser);
     put(
         route('question.update', $question),
         [
-            'question' => 'new question',
+            'question' => 'new question?',
         ]
     )->assertRedirect();
+
+});
+
+it('should be able to update a new question bigger than 255 caracters', function () {
+    //Arrange
+    $user = User::factory()->create();
+    actingAs($user);
+    $question = Question::factory()->for($user, 'createdBy')->create();
+
+    //Act
+    $request = put(route('question.update', $question), [
+        'question' => str_repeat('*', 255) . '?',
+    ]);
+    //Assert
+
+    $request->assertRedirect();
+
+    assertDatabaseCount('questions', 1);
+
+    assertDatabaseHas('questions', ['question' => str_repeat('*', 255) . '?']);
+
+});
+
+it('should check if you con update ends without question mark ?', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+    $question = Question::factory()->for($user, 'createdBy')->create();
+
+    $request = put(route('question.update', $question), [
+        'question' => str_repeat('*', 10),
+    ]);
+
+    $request->assertSessionHasErrors(['question' => 'Are you sure that the question ends with a question mark?']);
+
+});
+
+it('should update have at least 10 characters', function () {
+    //Arrange
+    $user     = User::factory()->create();
+    $question = Question::factory()->for($user, 'createdBy')->create();
+
+    actingAs($user);
+
+    //Act
+    $request = put(route('question.update', $question), [
+        'question' => str_repeat('*', 8) . '?',
+    ]);
+
+    //Assert
+
+    $request->assertSessionHasErrors(['question' => __('validation.min.string', ['attribute' => 'question', 'min' => 10])]);
 
 });
