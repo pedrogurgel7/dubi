@@ -31,7 +31,7 @@ it("should be able to update a question only with status draft", function () {
 
     put(route('question.update', $draftQuestion), [
         'question' => 'new question?',
-    ])->assertRedirect();
+    ])->assertRedirect(route('question.index'));
 
     put(route('question.update', $notDraftQuestion), [
         'question' => 'new question?',
