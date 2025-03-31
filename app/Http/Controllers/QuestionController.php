@@ -9,6 +9,14 @@ use Illuminate\View\View;
 
 class QuestionController extends Controller
 {
+    public function restore(Int $id): RedirectResponse
+    {
+        $question = Question::withTrashed()->findOrFail($id);
+        $question->restore();
+
+        return back();
+
+    }
     public function archive(Question $question): RedirectResponse
     {
 

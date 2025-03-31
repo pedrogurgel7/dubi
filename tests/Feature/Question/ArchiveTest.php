@@ -30,3 +30,16 @@ it('it should make sure that only who makes the question can destroy it', functi
     \Pest\Laravel\patch(route('question.archive', $question))->assertRedirect();
 
 });
+
+it('should be able to restore a question', function () {
+    $user     = User::factory()->create();
+    $question = Question::factory()->create(
+        ['draft' => true, 'created_by' => $user->id, 'deleted_at' => now()]
+    );
+    actingAs($user);
+
+    \Pest\Laravel\patch(route('question.restore', $question))->assertRedirect();
+
+    \Pest\Laravel\assertNotSoftDeleted('questions', ['id' => $question->id, 'draft' => true, 'created_by' => $user->id]);
+    expect($question->refresh()->deleted_at)->toBeNull();
+});
