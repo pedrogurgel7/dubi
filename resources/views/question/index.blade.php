@@ -92,7 +92,7 @@
                                     <x-form delete :action="route('question.destroy', $question)" >
                                         <x-btn.red>Delete</x-btn.red>
                                     </x-form>
-                                    <x-form delete :action="route('question.destroy', $question)" >
+                                    <x-form patch :action="route('question.archive', $question)" >
                                         <x-btn.red>Archive</x-btn.red>
                                     </x-form>
                                 </div>
@@ -109,6 +109,41 @@
 
             </x-table.table>
 
+
+            <div>
+                <h2 class="text-2xl font-bold py-5">Archive Questions</h2>
+            </div>
+            <x-table.table>
+                <x-table.thead>
+                    <x-table.th>Question</x-table.th>
+                    <x-table.th>Actions</x-table.th>
+                </x-table.thead>
+                <x-table.tbody>
+                    @foreach($trashQuestions as $question)
+
+                        <x-table.tr>
+                            <x-table.th>
+                                {{$question->question}}
+                            </x-table.th>
+                            <x-table.th>
+                                <div class="flex">
+
+                                    <x-form patch :action="route('question.restore', $question)" >
+                                        <x-btn.red>Restore</x-btn.red>
+                                    </x-form>
+                                </div>
+
+
+
+
+                            </x-table.th>
+                        </x-table.tr>
+                    @endforeach
+
+                </x-table.tbody>
+
+
+            </x-table.table>
 
 
 

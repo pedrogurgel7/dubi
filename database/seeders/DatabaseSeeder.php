@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Question::factory(200)->for(
-            \App\Models\User::factory()->create()
-        )->create();
+        Question::factory(200)->create();
     }
 }
