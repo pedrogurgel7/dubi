@@ -61,7 +61,8 @@ class QuestionController extends Controller
         return view(
             'question.index',
             [
-                'questions' => user()->questions()->get(),
+                'questions'      => user()->questions()->get(),
+                'trashQuestions' => user()->trashedQuestions()->get(),
             ]
         );
     }
